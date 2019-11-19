@@ -20,10 +20,16 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV.fetch('DATABASE_URL') %>
 
 development:
-  <<: *default
-  database: my_api_development
+  primary:
+    <<: *default
+    database: my_api_development
+  primary_replica:
+    <<: *default
+    database: my_api_development_replica
+    replica: true    
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
